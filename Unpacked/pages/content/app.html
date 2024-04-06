@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="en" bind-css="background-color:bgColor" bind-class="background-disabled:!config.background">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+  <style>
+    html {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      overflow: hidden !important;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+  <link href="/assets/fonts/remixicon/remixicon.css" rel="stylesheet" />
+  <link href="/assets/styles/app.css" rel="stylesheet" />
+  <!-- <link href="/pages/content/highlight.min.css" rel="stylesheet" /> -->
+  <link href="/pages/content/material-palenight.min.css" rel="stylesheet" />
+  <link href="/pages/content/katex.min.css" rel="stylesheet" />
+  <!-- clearly placeholder -->
+</head>
+
+<body id="root" bind-class="keywords-reading:hasRenderTags">
+  <div id="popshare">
+    <canvas id="popshare-image"></canvas>
+  </div>
+  <div id="clearly-btn"><img src="/assets/icons/active/ic_48.png" /></div>
+  <!-- <div id="clearly-code-tool">
+    <span>Click to copy</span>
+  </div> -->
+  <div id="alert" class="alert alert-ok">
+    <div id="alert-message">
+      <span bind="alertMessage"></span>
+      <button class="btn-alert" click="alertBtnClick()" show="alertBtn" bind="alertBtn"></button>
+    </div>
+  </div>
+
+  <div id="main">
+    <div id="poptranslate">
+      <div id="poptranslate-toolbox">
+        <div class="btn-poptranslate" id="btn-copy-translate">
+          <i class="ri-clipboard-line"></i>
+        </div>
+        <div class="right-toolbox">
+          <span>{{app.translate.prefix}}:</span>
+          <select id="poptranslate-lang" bind="config.translateLang">
+            <option value="af">Afrikaans</option>
+            <option value="sq">Albanian</option>
+            <option value="am">Amharic</option>
+            <option value="ar">Arabic</option>
+            <option value="hy">Armenian</option>
+            <option value="az">Azerbaijani</option>
+            <option value="eu">Basque</option>
+            <option value="be">Belarusian</option>
+            <option value="bn">Bengali</option>
+            <option value="bs">Bosnian</option>
+            <option value="bg">Bulgarian</option>
+            <option value="ca">Catalan</option>
+            <option value="ceb">Cebuano</option>
+            <option value="ny">Chichewa</option>
+            <option value="zh">Chinese (Simplified)</option>
+            <option value="zh-TW">Chinese (Traditional)</option>
+            <option value="co">Corsican</option>
+            <option value="hr">Croatian</option>
+            <option value="cs">Czech</option>
+            <option value="da">Danish</option>
+            <option value="nl">Dutch</option>
+            <option value="en">English</option>
+            <option value="eo">Esperanto</option>
+            <option value="et">Estonian</option>
+            <option value="tl">Filipino</option>
+            <option value="fi">Finnish</option>
+            <option value="fr">French</option>
+            <option value="fy">Frisian</option>
+            <option value="gl">Galician</option>
+            <option value="ka">Georgian</option>
+            <option value="de">German</option>
+            <option value="el">Greek</option>
+            <option value="gu">Gujarati</option>
+            <option value="ht">Haitian Creole</option>
+            <option value="ha">Hausa</option>
+            <option value="haw">Hawaiian</option>
+            <option value="iw">Hebrew</option>
+            <option value="hi">Hindi</option>
+            <option value="hmn">Hmong</option>
+            <option value="hu">Hungarian</option>
+            <option value="is">Icelandic</option>
+            <option value="ig">Igbo</option>
+            <option value="id">Indonesian</option>
+            <option value="ga">Irish</option>
+            <option value="it">Italian</option>
+            <option value="ja">Japanese</option>
+            <option value="jw">Javanese</option>
+            <option value="kn">Kannada</option>
+            <option value="kk">Kazakh</option>
+            <option value="km">Khmer</option>
+            <option value="ko">Korean</option>
+            <option value="ku">Kurdish (Kurmanji)</option>
+            <option value="ky">Kyrgyz</option>
+            <option value="lo">Lao</option>
+            <option value="la">Latin</option>
+            <option value="lv">Latvian</option>
+            <option value="lt">Lithuanian</option>
+            <option value="lb">Luxembourgish</option>
+            <option value="mk">Macedonian</option>
+            <option value="mg">Malagasy</option>
+            <option value="ms">Malay</option>
+            <option value="ml">Malayalam</option>
+            <option value="mt">Maltese</option>
+            <option value="mi">Maori</option>
+            <option value="mr">Marathi</option>
+            <option value="mn">Mongolian</option>
+            <option value="my">Myanmar (Burmese)</option>
+            <option value="ne">Nepali</option>
+            <option value="no">Norwegian</option>
+            <option value="ps">Pashto</option>
+            <option value="fa">Persian</option>
+            <option value="pl">Polish</option>
+            <option value="pt">Portuguese</option>
+            <option value="pa">Punjabi</option>
+            <option value="ro">Romanian</option>
+            <option value="ru">Russian</option>
+            <option value="sm">Samoan</option>
+            <option value="gd">Scots Gaelic</option>
+            <option value="sr">Serbian</option>
+            <option value="st">Sesotho</option>
+            <option value="sn">Shona</option>
+            <option value="sd">Sindhi</option>
+            <option value="si">Sinhala</option>
+            <option value="sk">Slovak</option>
+            <option value="sl">Slovenian</option>
+            <option value="so">Somali</option>
+            <option value="es">Spanish</option>
+            <option value="su">Sundanese</option>
+            <option value="sw">Swahili</option>
+            <option value="sv">Swedish</option>
+            <option value="tg">Tajik</option>
+            <option value="ta">Tamil</option>
+            <option value="te">Telugu</option>
+            <option value="th">Thai</option>
+            <option value="tr">Turkish</option>
+            <option value="uk">Ukrainian</option>
+            <option value="ur">Urdu</option>
+            <option value="uz">Uzbek</option>
+            <option value="vi">Vietnamese</option>
+            <option value="cy">Welsh</option>
+            <option value="xh">Xhosa</option>
+            <option value="yi">Yiddish</option>
+            <option value="yo">Yoruba</option>
+            <option value="zu">Zulu</option>
+          </select>
+        </div>
+      </div>
+      <div id="poptranslate-content">
+        <div id="poptranslate-word"></div>
+        <div id="poptranslate-voice">
+          <i class="ri-volume-up-fill" id="poptranslate-btn-speak"></i>
+          <span></span>
+        </div>
+        <div id="poptranslate-explain"></div>
+        <div id="poptranslate-translit"></div>
+        <div id="poptranslate-dict"></div>
+      </div>
+    </div>
+    <div id="popmenu">
+      <div id="popmenu-overlay"></div>
+      <div id="popmenu-tools">
+        <li id="popmenu-copy" class="popmenu-item" data-type="copy"><i class="ri-clipboard-line"
+            click="popmenu(copy)"></i></li>
+        <li id="popmenu-speak" class="popmenu-item" data-type="speak" click="popmenu(speak)"><i
+            class="ri-volume-down-line"></i> </li>
+        <li id="popmenu-translate" class="popmenu-item" data-type="translate" click="popmenu(translate)"
+          bind-class="popmenu-loading:popmenuLoading=translate"><i class="ri-translate"></i></li>
+        <li id="popmenu-highlight" class="popmenu-item" data-type="highlight" click="popmenu(mark)"><i
+            class="ri-mark-pen-line"></i> </li>
+        <li id="popmenu-search" class="popmenu-item" data-type="search" bind-class="popmenu-loading:popmenuLoading=search" click="popmenu(search)" show="config.popmenuSearch"><i class="ri-search-2-line"></i>
+        </li>
+        <li id="popmenu-wiki" class="popmenu-item" bind-class="popmenu-loading:popmenuLoading=wiki" data-type="wiki" click="popmenu(wiki)" show="config.popmenuWiki"><i class="ri-book-2-line"></i> </li>
+        <!-- <li id="popmenu-share" class="popmenu-item" data-type="share">Share</li> -->
+      </div>
+      <!--<li id="popmenu-share">Share</li>-->
+    </div>
+    <div id="loading">
+      <div class="loading-content">
+        <div class="loading-icon">
+          <div class="line line-1"></div>
+          <div class="line line-2"></div>
+          <div class="line line-3"></div>
+          <div class="line line-4"></div>
+        </div>
+        <span>Content is analyzing...</span>
+      </div>
+    </div>
+
+    <div id="container">
+      <div id="print-copyright">
+        Generated by <a href="https://clearlyreader.com">Clearly Reader</a>
+      </div>
+      <div id="subject"></div>
+      <div id="byline"></div>
+      <div id="summary" show="summaryText">
+        <blockquote class="summary-text" bind="summaryText"></blockquote>
+        <span class="summary-copyright">{{app.summary.footer}}</span>
+      </div>
+      <!-- <div id="cover"></div> -->
+
+      <div id="outline" show="config.outline">
+        <div id="autoopen" show="autoOpen">
+          <!-- <div id="switch-autoopen" class="switch"><span class="slider"></span></div> -->
+          <span class="autoopen-title"> {{app.autoopen.title}}</span>
+          <span id="autoopen-mode">
+            <span id="autoopen-value" bind="autoOpenValue"></span>
+            <i class="ri-arrow-down-s-line"></i>
+            <ul id="autoopen-select">
+            </ul>
+          </span>
+        </div>
+        <div id="outlines" class="outlines"></div>
+        <div id="links-container" show="config.links && articleLinks">
+          <h5 id="links-head">{{app.outline.links}}</h5>
+          <div id="links" class="links"></div>
+        </div>
+        <div id="marks" class="marks" show="marks">
+          <h5 id="marks-head">{{app.mark.head}}</h5>
+          <div repeat="marks" class="mark-item">
+            <div class="header">
+              <span class="date" bind=".createdAt|formatTime"></span>
+              <span class="close" click="removeMark(., 1)"><i id="btn-thumb-up" class="ri-close-circle-line"></i></span>
+            </div>
+            <div class="text" bind=".text" click="clickMark(.)"></div>
+          </div>
+        </div>
+      </div>
+
+
+      <div id="content"></div>
+      <footer id="footer" show="load && !config.disableBrand">
+        <div id="share" class="share">
+          <span class="share-title">{{app.feedback.title}}</span>
+          <div id="share-default" class="share-overlay">
+            <i id="btn-thumb-up" class="ri-thumb-up-fill thumb thumb-up"></i>
+            <i id="btn-thumb-down" class="ri-thumb-down-fill thumb thumb-down"></i>
+          </div>
+          <div id="share-no" class="share-overlay">
+            <span class="share-letter">{{app.feedback.received}}</span>
+            <a id="btn-cantact" class="btn-cantact" href="https://clearlyreader.com/r/report" target="_blank">
+              <i class="ri-mail-line"></i>Contact us</a>
+          </div>
+          <div id="share-yes" class="share-overlay">
+            <span class="share-letter">{{app.feedback.help}}</span>
+            <a id="btn-comments" href="https://clearlyreader.com/r/reviews" target="_blank">
+              <i class="ri-star-line"></i> {{app.feedback.stars}}</a>
+          </div>
+        </div>
+
+        <div class="moretips">
+          <div class="moretips-label">{{app.about.copyright}}</div>
+          <div class="moretips-action">
+            <span class="icon-pro">PRO</span>
+            <a click="showUpgrade()" show="config.accountPlanId!=PRO,PREMIUM">{{app.upgrade.link}}</a>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+    <div id="book-controls">
+      <div id="book-control-left" class="book-control-page" click="scrollPage(prev)"><i
+          class="ri-arrow-left-s-line"></i></div>
+      <div id="book-control-right" class="book-control-page" click="scrollPage(next)"><i
+          class="ri-arrow-right-s-line"></i></div>
+      <div id="book-footer">
+        <span show="bookPages"><span bind="bookPage"></span> / <span bind="bookPages"></span></span>
+      </div>
+    </div>
+
+
+  </div>
+  <div id="tool">
+    <div class="menu btn-close">
+      <div id="btn-close" click="action(close)" class="btn-icon"><i class="ri-close-circle-fill"></i></div>
+    </div>
+
+    <div class="menu" id="menu-speak" menu-tooltip="Listen">
+      <div id="btn-speak" class="btn-icon" click="speak=START/PAUSE">
+        <i class="ri-volume-down-line" id="menu-speak-icon"></i>
+      </div>
+    </div>
+
+    <div id="audio-player" class="audio-player">
+      <div class="audio-control-header">
+        <div class="name">Clearly Audio</div>
+        <div id="btn-mini-ui" class="btn-mini-ui" click="action(miniUI)">
+          <i class="ri-picture-in-picture-2-line"></i>
+        </div>
+        <div id="btn-max-ui" class="btn-max-ui" click="action(maxUI)">
+          <i class="ri-picture-in-picture-exit-fill"></i>
+        </div>
+        <div id="btn-exit-speak" class="btn-exit-speak" click="speak=EXIT">
+          <i class="ri-close-line"></i>
+        </div>
+      </div>
+
+      <div id="audio-control-wrapper" class="audio-control-wrapper">
+        <div class="section-control">
+          <div class="btn-control" click="speak=RESTART" show="speak=START,PAUSE,MINIUI,MAXUI">
+            <i class="ri-restart-fill"></i>
+          </div>
+          <div class="btn-control lg" click="speak=START" show="speak=!,PAUSE,STOP">
+            <i class="ri-play-circle-fill"></i>
+          </div>
+          <div class="btn-control lg" click="speak=PAUSE" show="speak=START,MINIUI,MAXUI">
+            <i class="ri-pause-circle-fill"></i>
+          </div>
+          <div class="btn-control stop" click="speak=STOP" show="speak=START,PAUSE,MINIUI,MAXUI">
+            <i class="ri-stop-circle-fill"></i>
+          </div>
+          <!-- <div class="control-tip" show="speakMark=false">highlight off</div> -->
+        </div>
+
+        <div class="section-speed">
+          <span class="btn-speed" click="config.speakRate=0.5">0.8x</span>
+          <span class="btn-speed" click="config.speakRate=1">1x</span>
+          <span class="btn-speed" click="config.speakRate=1.2">1.2x</span>
+          <span class="btn-speed" click="config.speakRate=1.5">1.5x</span>
+          <span class="btn-speed" click="config.speakRate=2">2x</span>
+        </div>
+
+        <div class="section-voice" click="showVoiceSelector=1/0">
+          <div class="label">{{app.speak.voice}}</div>
+          <div class="value">
+            <span bind="speakVoiceName"></span>
+            <i class="ri-arrow-up-s-line"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="voice-seletor" show="showVoiceSelector=1">
+        <div class="voice-seletor-header" click="showVoiceSelector=1/0">
+          <span class="title">Select Voice</span>
+          <i class="ri-arrow-down-s-line"></i>
+        </div>
+        <div id="menu-voices"></div>
+      </div>
+    </div>
+
+    <div class="menu" menu-tooltip="Export / Copy" id="menu-export" click="showDialog=export">
+      <div class="btn-icon"><i class="ri-inbox-archive-line" id="btn-export"></i></div>
+      <!-- <ul class="menu-sub">
+        <div class="menu-sub-wrapper">
+          <li class="menu-sub-header">{{app.tool.exportto}}</li>
+          <li id="btn-print" click="action(print)">PDF</li>
+          <li id="btn-export-doc" click="action(exportDoc)">Doc</li>
+          <li id="btn-export-docx" click="action(exportDocx)">Docx</li>
+          <li id="btn-export-md" click="action(exportMarkdown)">Markdown</li>
+          <li id="btn-export-md" click="showDialog=clip">MP3 (AI Speach)</li>
+        </div>
+      </ul> -->
+
+    </div>
+
+    <!-- <div class="menu" id="menu-copy">
+      <div class="btn-icon"><i class="ri-clipboard-line"></i></div>
+      <ul class="menu-sub">
+        <div class="menu-sub-wrapper">
+          <li class="menu-sub-header">{{app.tool.copyas}}</li>
+          <li id="btn-copy-article" click="action(copyArticle)">Rich text</li>
+          <li id="btn-copy-markdown" click="action(copyMarkdown)">Markdown</li>
+          <li id="btn-copy-html" click="action(copyHTML)">HTML</li>
+        </div>
+      </ul>
+    </div> -->
+
+    <div class="menu" menu-tooltip="CLIP" id="btn-clip" click="quickClip()">
+      <div class="btn-icon"><i bind-class="ri-upload-cloud-fill:clip;ri-upload-cloud-line:!clip"></i></div>
+    </div>
+
+    <!-- <div class="menu" menu-tooltip="All CLIPs" id="btn-clip" click="showDialog=clips">
+      <div class="btn-icon"><i class="ri-menu-fold-line"></i></div>
+    </div> -->
+
+    <div class="menu-divider"></div>
+
+    <div class="menu" menu-tooltip="Theme Settings" click="showDialog=style">
+      <div class="btn-icon" id="btn-style"><i class="ri-font-size"></i> </div>
+    </div>
+
+    <div class="menu" id="menu-fullscreen" menu-tooltip="Fullscreen" click="action(toggleFullscreenMode)">
+      <div class="btn-icon"><i class="ri-fullscreen-line" id="menu-fullscreen-icon"></i></div>
+    </div>
+
+    <div class="menu" menu-tooltip="Settings" data-toggle="tooltip" show="clientApp=extension" id="btn-setting" click="showDialog=setting">
+      <div class="btn-icon"><i class="ri-settings-2-line"></i></div>
+    </div>
+
+    <div class="menu-divider" show="!config.disableBrand">
+      <a class="menu lgup" show="tipUpgrade">
+        <span click="openWindow(upgradebtn)" class="icon-pro">{{app.upgrade.tipbtn}} <i
+            class="ri-arrow-right-line"></i></span>
+        <span click="tipUpgrade="><i class="ri-close-line"></i></span>
+        <div>{{app.upgrade.tipintro}}</div>
+      </a>
+    </div>
+
+    <div class="menu" menu-tooltip="Report or feedback" click="action(reportBug)">
+      <div class="btn-icon"><i class="ri-bug-2-line"></i></div>
+    </div>
+
+    <a class="menu lg" show="!config.disableBrand" menu-tooltip="Clearly" href="https://clearlyreader.com/changelog"
+      target="_blank">
+      <div class="btn-icon bg"></div>
+      <span class="version" bind="clientVersion"></span>
+    </a>
+  </div>
+
+  <!-- dialog copy & export -->
+  <div class="dialog" id="dialog-export">
+    <div class="overly-mask" click="showDialog="></div>
+    <div class="setting">
+      <div class="dialog-header">
+        <div class="dialog-title">{{app.tool.exportto}} / {{app.tool.copyas}}</div>
+        <div class="dialog-btn-close" click="showDialog="><i class="ri-close-line"></i></div>
+      </div>
+
+      <div class="tcell column">
+        <div class="form-label">
+          <span>{{app.tool.exportto}}</span>
+        </div>
+        <div class="form-group grid">
+          <div class="btn-export" id="btn-print" click="showDialog=print">
+            <i class="ri-file-ppt-fill"></i>
+            <span>Print / Export PDF</span>
+          </div>
+          <div class="btn-export btn-pro" id="btn-export-doc" click="action(exportDoc)">
+            <i class="ri-file-word-2-fill"></i>
+            <span>Doc</span>
+          </div>
+          <div class="btn-export btn-pro" id="btn-export-docx" click="action(exportDocx)">
+            <i class="ri-file-word-fill"></i>
+            <span>Docx</span>
+          </div>
+          <div class="btn-export btn-pro" id="btn-export-md" click="action(exportMarkdown)">
+            <i class="ri-markdown-fill"></i>
+            <span>Markdown</span>
+          </div>
+          <div class="btn-export btn-premium" id="btn-export-md" click="exportClip(audio)">
+            <i class="ri-folder-music-fill"></i>
+            <span>MP3 (AI Speech)</span>
+          </div>
+          <div class="btn-export btn-premium" id="btn-export-md" click="exportClip(epub)">
+            <i class="ri-book-fill"></i>
+            <span>EPUB</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tcell column">
+        <div class="form-label">
+          <div>{{app.tool.copyas}}</div>
+        </div>
+        <div class="form-group grid">
+          <div class="btn-export" id="btn-copy-article" click="action(copyArticle)">
+            <i class="ri-file-text-fill"></i>
+            <span>Rich text</span>
+          </div>
+          <div class="btn-export btn-pro" id="btn-copy-markdown" click="action(copyMarkdown)">
+            <i class="ri-markdown-fill"></i>
+            <span>Markdown</span>
+          </div>
+          <div class="btn-export btn-pro" id="btn-copy-html" click="action(copyHTML)">
+            <i class="ri-file-code-fill"></i>
+            <span>HTML</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tcell column">
+        <div class="form-label">
+          <div>{{app.tool.sendas}}</div>
+        </div>
+        <div class="form-group grid">
+          <div class="btn-export" click="clip(share)">
+            <i class="ri-external-link-fill"></i>
+            <span>URL</span>
+          </div>
+          <div class="btn-export" click="clip(email)">
+            <i class="ri-mail-send-fill"></i>
+            <span>Email</span>
+          </div>
+          <div class="btn-export btn-premium" click="showDialog=kindle">
+            <i class="ri-book-open-fill"></i>
+            <span>Kindle</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.setting.disableexportbrand}} <span class="icon-pro">PRO</span></div>
+        <div class="form-group">
+          <div id="switch-showtip" class="switch" click="controlToggle(config.disableExportBrand)"
+            bind-class="s-on:config.disableExportBrand;s-off:!config.disableExportBrand;s-disable:config.accountPlanId!=PRO,PREMIUM">
+            <span class="slider"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- dialog style settings -->
+  <div class="dialog" id="dialog-style">
+    <div class="overly-mask" click="showDialog="></div>
+    <div class="setting theme">
+      <div class="dialog-header">
+        <div class="dialog-title">{{app.style.title}}</div>
+        <a click="showUpgrade()" show="config.accountPlanId!=PRO,PREMIUM"><span class="icon-pro">Upgrade PRO</span></a>
+        <div class="dialog-btn-close" click="showDialog="><i class="ri-close-line"></i></div>
+      </div>
+
+      <div class="dialog-tabs">
+        <span class="tab-item" click="showStyleTab=" bind-class="tab-actived:!showStyleTab">{{app.style.uitab}}</span>
+        <span class="tab-item" click="showStyleTab=feature" bind-class="tab-actived:showStyleTab=feature">{{app.style.displaytab}}</span>
+      </div>
+
+      <div class="dialog-body" show="!showStyleTab">
+        <div class="tcell">
+          <div class="form-label">
+            <span>{{app.style.fontsize}}</span>
+          </div>
+          <div class="form-group">
+            <span id="value-zoom" class="form-value"></span>
+            <div class="btn-config-group">
+              <span class="btn-config font-zoomin" id="btn-zoomin" click="action(zoomIn)">A</span>
+              <span class="btn-config font-zoomout" id="btn-zoomout" click="action(zoomOut)">A</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tcell">
+          <div class="form-label">
+            <span>{{app.style.pagewidth}}</span>
+          </div>
+          <div class="form-group">
+            <span id="value-width" class="form-value"></span>
+            <div class="btn-config-group">
+              <div class="btn-config width-zoomin" id="btn-content-zoomin" click="action(decreseWidth)"></div>
+              <div class="btn-config width-zoomout" id="btn-content-zoomout" click="action(increseWidth)"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tcell">
+          <div class="form-label">
+            <span>{{app.style.spacing}} <span class="icon-pro">PRO</span></span>
+          </div>
+          <div class="form-group">
+            <input class="input-number" id="set-spacing" type="number" step="0.1" min="0" max="1"
+              bind="config.letterSpacing" disable="config.accountPlanId!=PRO,PREMIUM" />
+          </div>
+        </div>
+
+        <div class="tcell">
+          <div class="form-label">
+            <span>{{app.style.lineheight}} <span class="icon-pro">PRO</span></span>
+          </div>
+          <div class="form-group">
+            <input class="input-number" id="set-lineheight" type="number" step="0.2" min="1" max="3"
+              bind="config.lineHeight" disable="config.accountPlanId!=PRO,PREMIUM" />
+          </div>
+        </div>
+
+        <div class="tcell">
+          <div class="form-label">{{app.style.booklayout}} <span class="icon-pro">PRO</span></div>
+          <div class="form-group">
+            <div id="switch-booklayout" class="switch" click="controlToggle(config.bookLayout)"
+              bind-class="s-on:config.bookLayout;s-off:!config.bookLayout;">
+              <span class="slider"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tcell" id="themes-auto">
+          <div class="form-label">
+            {{app.style.autotheme}} <span class="icon-pro">PRO</span>
+          </div>
+          <div class="form-group">
+            <div id="switch-theme" class="switch" click="controlToggle(config.themeAuto)"
+              bind-class="s-on:config.themeAuto;s-off:!config.themeAuto">
+              <span class="slider"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tcell column" id="themes" show="!config.themeAuto">
+          <div class="form-label">{{app.style.theme}} </div>
+          <div class="form-group btn-theme-group themes-list">
+          </div>
+        </div>
+
+        <div class="tcell" id="themes-day" show="config.themeAuto">
+          <div class="form-label">{{app.style.daytheme}}</div>
+          <div class="form-group themes-list"></div>
+        </div>
+
+        <div class="tcell" id="themes-night" show="config.themeAuto">
+          <div class="form-label">{{app.style.nighttheme}}</div>
+          <div class="form-group themes-list"></div>
+        </div>
+
+        <div class="tcell column">
+          <div class="form-label">{{app.style.fonts}}</div>
+          <div id="font-select-style" class="form-group btn-theme-group">
+          </div>
+        </div>
+
+        <div class="tcell">
+          <div class="form-label">{{app.style.background}}</div>
+          <div class="form-group">
+            <div id="switch-background" class="switch" click="config.background=0/1"
+              bind-class="s-on:config.background;s-off:!config.background"><span class="slider"></span></div>
+          </div>
+        </div>
+
+        <div class="tcell">
+          <div class="form-label">{{app.style.roundcorner}}</div>
+          <div class="form-group">
+            <div id="switch-background" class="switch" click="config.roundCorner=0/1"
+              bind-class="s-on:config.roundCorner;s-off:!config.roundCorner"><span class="slider"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dialog-body" show="showStyleTab=feature">
+        <div class="tcell">
+          <div class="form-label">{{app.style.codehighlight}}</div>
+          <div class="form-group">
+            <div id="switch-syntax" class="switch" click="config.syntax=0/1" bind-class="s-on:config.syntax;s-off:!config.syntax">
+              <span class="slider"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tcell">
+          <div class="form-label">{{app.style.outline}}</div>
+          <div class="form-group">
+            <div id="switch-outline" class="switch" click="config.outline=0/1"
+              bind-class="s-on:config.outline;s-off:!config.outline">
+              <span class="slider"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tcell">
+          <div class="form-label">{{app.style.links}}</div>
+          <div class="form-group">
+            <div id="switch-links" class="switch" click="config.links=0/1"
+              bind-class="s-on:config.links;s-off:!config.links">
+              <span class="slider"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tcell">
+          <div class="form-label">{{app.style.openlink}}</div>
+          <div class="form-group">
+            <div id="switch-linkopennew" class="switch" click="config.linkOpenNew=0/1"
+              bind-class="s-on:config.linkOpenNew;s-off:!config.linkOpenNew">
+              <span class="slider"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tcell">
+          <div class="form-label">{{app.style.latex}} <span class="icon-pro">PRO</span></div>
+          <div class="form-group">
+            <div id="switch-latex" class="switch" click="controlToggle(config.latex)"
+              bind-class="s-on:config.latex;s-off:!config.latex;"><span class="slider"></span></div>
+          </div>
+        </div>
+
+        <div class="tcell">
+          <div class="form-label">{{app.style.showvideo}}</div>
+          <div class="form-group">
+            <div id="switch-background" class="switch" click="config.showVideo=0/1"
+              bind-class="s-on:config.showVideo;s-off:!config.showVideo"><span class="slider"></span></div>
+          </div>
+        </div>
+
+        <div class="tcell">
+          <div class="form-label">{{app.setting.disablebrand}} <span class="icon-pro">PRO</span></div>
+          <div class="form-group">
+            <div id="switch-showtip" class="switch" click="controlToggle(config.disableBrand)"
+              bind-class="s-on:config.disableBrand;s-off:!config.disableBrand;">
+              <span class="slider"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tcell">
+          <div class="form-label">{{app.setting.paragraphtranslate}} <span class="icon-pro">PRO</span></div>
+          <div class="form-group">
+            <div id="switch-showtip" class="switch" click="controlToggle(config.paragraphTranslate)"
+              bind-class="s-on:config.paragraphTranslate;s-off:!config.paragraphTranslate;">
+              <span class="slider"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tcell-group">
+          <div class="tcell-header">
+            <div class="form-label">{{app.style.popmenutoggle}} <span class="icon-pro">PRO</span></div>
+          </div>
+
+          <div class="tcell">
+            <div class="form-label">{{app.style.wikimenu}}</div>
+            <div class="form-group">
+              <div id="switch-showtip" class="switch" click="controlToggle(config.popmenuWiki)" bind-class="s-on:config.popmenuWiki;s-off:!config.popmenuWiki;">
+                <span class="slider"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tcell">
+            <div class="form-label">{{app.style.searchmenu}}</div>
+            <div class="form-group">
+              <div id="switch-showtip" class="switch" click="controlToggle(config.popmenuSearch)" bind-class="s-on:config.popmenuSearch;s-off:!config.popmenuSearch;">
+                <span class="slider"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- dialog custom theme -->
+  <div class="dialog" id="dialog-custom">
+    <div class="overly-mask" click="showDialog="></div>
+    <div class="setting">
+      <div class="dialog-header">
+        <div class="dialog-title">{{app.custom.title}}</div>
+        <div class="dialog-btn-close" click="showDialog=style"><i class="ri-close-line"></i></div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">
+          <span>{{app.custom.maincolor}}</span>
+        </div>
+        <div class="form-group">
+          <input class="btn-colorpicker" type="color" bind="config.mainColor" />
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">
+          <span>{{app.custom.bgcolor}}</span>
+        </div>
+        <div class="form-group">
+          <input class="btn-colorpicker" type="color" bind="config.bgColor" />
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">
+          <span>{{app.style.fontcolor}}</span>
+        </div>
+        <div class="form-group">
+          <input class="btn-colorpicker" type="color" bind="config.fontColor" />
+        </div>
+      </div>
+
+      <!-- <div class="tcell">
+        <div class="form-label">
+          <span>{{app.style.bgimg}}</span>
+        </div>
+        <div class="form-group">
+        </div>
+      </div> -->
+    </div>
+  </div>
+
+  <!-- dialog css start -->
+  <div class="dialog" id="dialog-css">
+    <div class="overly-mask" click="showDialog="></div>
+    <div class="setting">
+      <div class="dialog-header">
+        <div class="dialog-title">{{app.css.title}}</div>
+        <div class="dialog-btn-close" click="showDialog=style"><i class="ri-close-line"></i></div>
+      </div>
+      <div class="custom-css-wrapper">
+        <textarea class="custom-textarea" bind="config.customCSS"></textarea>
+      </div>
+
+      <div class="dialog-action-footer">
+        <div class="tips">{{app.css.intro}}</div>
+        <div class="btn-group custom-css">
+          <button class="btn solid md" click="resetConfig(customCSS)">{{app.css.resetbtn}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- dialog css end -->
+
+  <!-- dialog clip -->
+  <div class="dialog" id="dialog-clips">
+    <div class="overly-mask" click="showDialog="></div>
+    <div class="setting dialog-clip">
+      <div class="dialog-header">
+        <div class="dialog-title">
+          <span>{{app.clip.allclips}}</span>
+        </div>
+        <a class="btn-link" click="showDialog=account">
+          <strong class="form-value" bind="config.accountEmail" show="config.accountEmail"></strong>
+          <strong class="form-value" show="!config.accountEmail">Not login</strong>
+          <i class="ri-arrow-right-s-line"></i>
+        </a>
+        <div class="dialog-btn-close no-auto" click="showDialog="><i class="ri-close-line"></i></div>
+      </div>
+      <div class="clip-wrapper">
+        <div class="clip-item-wrapper">
+          <div class="clip-hero">
+            <h3 class="hero-title" bind="articleTitle"></h3>
+          </div>
+
+          <div class="clip-item-wrapper">
+            <div class="clip-item">
+              <div class="item-top">
+                <div class="icon-clip"><i class="ri-scissors-2-fill"></i></div>
+                <div class="info">
+                  <h3>{{app.clip.clip}}</h3>
+                  <div class="info-des">{{app.clip.clipdes}}</div>
+                </div>
+                <button class="btn solid xs" click="toggleClip(clip)" show="!clip">{{app.clip.clipbtn}}</button>
+                <button class="btn btn-danger solid xs" click="toggleClip(clip)" show="clip">{{app.clip.clipdeletebtn}}</button>
+              </div>
+              <div class="tcell clip-switch-wrapper">
+                <div class="form-label">{{app.clip.autoclip}}</div>
+                <div class="form-group">
+                  <div id="switch-showtip" class="switch" click="config.autoClip=0/1"
+                    bind-class="s-on:config.autoClip;s-off:!config.autoClip">
+                    <span class="slider"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="clip-item" bind-class="clip-disabled:config.accountPlanId!=PREMIUM">
+              <div class="item-top">
+                <div class="icon-clip"><i class="ri-rss-fill"></i></div>
+                <div class="info">
+                  <h3>{{app.clip.rss}} <span class="icon-pro">PRO</span></h3>
+                  <div class="info-des">{{app.clip.rsstip}}</div>
+                </div>
+                <button class="btn solid xs" click="clip(rss)" show="!rssUrl">{{app.clip.rssbtn}}</button>
+                <button class="btn btn-link" click="copyFromState(rssUrl)" show="rssUrl"><i class="ri-clipboard-line"></i>Copy URL</button>
+              </div>
+            </div>
+            <div class="clip-item" bind-class="clip-disabled:config.accountPlanId!=PREMIUM">
+              <div class="item-top">
+                <div class="icon-clip"><i class="ri-radio-fill"></i></div>
+                <div class="info">
+                  <h3>{{app.clip.podcast}} <span class="icon-premium">Premium</span></h3>
+                  <div class="info-des">{{app.clip.podcasttip}}</div>
+                </div>
+                <button class="btn solid xs" click="clip(podcast)" show="!podcastUrl">{{app.clip.podcastbtn}}</button>
+                <button class="btn btn-link" click="copyFromState(podcastUrl)" show="podcastUrl"><i
+                    class="ri-clipboard-line"></i>Copy URL</button>
+              </div>
+            </div>
+            <div class="clip-item" bind-class="clip-disabled:config.accountPlanId!=PREMIUM">
+              <div class="item-top">
+                <div class="icon-clip"><i class="ri-robot-fill"></i> </div>
+                <div class="info">
+                  <h3>{{app.clip.summary}} <span class="icon-premium">Premium</span></h3>
+                  <div class="info-des">{{app.clip.summarytip}} </div>
+                </div>
+                <button class="btn solid xs" click="summarize()" show="summaryStatus=FAIL,!">{{app.clip.summarybtn}}</button>
+                <button class="btn solid xs btn-loading" show="summaryStatus=NEW,PENDING" click="clipType=summary">{{app.clip.summarybtnpending}}</button>
+                <button class="btn btn-link" show="summaryStatus=DONE" click="clipType=summary">{{app.clip.summarybtndone}}</button>
+              </div>
+            </div>
+            <div class="clip-item" bind-class="clip-disabled:config.accountPlanId!=PREMIUM">
+              <div class="item-top">
+                <div class="icon-clip"><i class="ri-folder-music-fill"></i></div>
+                <div class="info">
+                  <h3>{{app.clip.audio}} <span class="icon-premium">Premium</span></h3>
+                  <div class="info-des">{{app.clip.audiotip}} </div>
+                </div>
+                <button class="btn solid xs" click="clip(audio)" show="!audioUrl">{{app.clip.audiobtn}}</button>
+                <button class="btn btn-link" click="copyFromState(audioUrl)" show="audioUrl">
+                  <i class="ri-clipboard-line"></i>Copy URL
+                </button>
+              </div>
+            </div>
+            <div class="clip-item" bind-class="clip-disabled:config.accountPlanId!=PREMIUM">
+              <div class="item-top">
+                <div class="icon-clip"><i class="ri-book-fill"></i></div>
+                <div class="info">
+                  <h3>{{app.clip.kindle}} <span class="icon-premium">Premium</span></h3>
+                  <div class="info-des">{{app.clip.kindletip}} </div>
+                </div>
+                <button class="btn solid xs" click="showDialog=kindle" show="!kindle">{{app.clip.kindlebtn}}</button>
+              </div>
+            </div>
+            <div class="clip-item" bind-class="clip-disabled:config.accountPlanId!=PREMIUM">
+              <div class="item-top">
+                <div class="icon-clip"><i class="ri-book-fill"></i></div>
+                <div class="info">
+                  <h3>{{app.clip.epub}} <span class="icon-premium">Premium</span></h3>
+                  <div class="info-des">{{app.clip.epubtip}} </div>
+                </div>
+                <button class="btn solid xs" click="clip(epub)" show="!epubUrl">{{app.clip.epubbtn}}</button>
+                <button class="btn btn-link" click="copyFromState(epubUrl)" show="epubUrl">
+                  <i class="ri-clipboard-line"></i>Copy URL
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <a class="showweb" href="https://clearlyreader.com/app?utm_source=clearly" target="_blank">
+            <i class="ri-apps-line"></i>
+            <span>{{app.clip.webappavaiable}}</span>
+            <i class="ri-arrow-right-s-line arrow-right"></i>
+          </a>
+
+          <div class="join-waitlist" show="config.accountPlanId!=PREMIUM">
+            <i class="ri-pencil-ruler-2-line"></i>
+            <span>{{app.clip.upgradeintro}}</span>
+            <div class="join-form">
+              <div class="btn solid md" click="showUpgrade(PREMIUM)">{{app.clip.upgradebtn}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- dialog setting -->
+  <div class="dialog" id="dialog-setting">
+    <div class="overly-mask" click="showDialog="></div>
+    <div class="setting dialog-about">
+      <div class="dialog-header">
+        <div class="dialog-title">{{app.setting.title}}</div>
+        <div class="dialog-btn-close" click="showDialog="><i class="ri-close-line"></i></div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.setting.account}}</div>
+        <div class="form-group">
+          <a class="btn-link" click="showDialog=account">
+            <strong class="form-value" bind="config.accountEmail" show="config.accountEmail"></strong>
+            <strong class="form-value" show="!config.accountEmail">Not login</strong>
+            <i class="ri-arrow-right-s-line"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.setting.syncconfig}} <span class="icon-pro">PRO</span></div>
+        <div class="form-group">
+          <div show="config.syncConfig" class="value-wrapper">
+            <span class="value-lable">{{app.setting.syncconfigversion}}</span>
+            <span bind="syncAt|formatTime"></span>
+          </div>
+          <div id="switch-showtip" class="switch" click="controlToggle(config.syncConfig)"
+            bind-class="s-on:config.syncConfig;s-off:!config.syncConfig">
+            <span class="slider"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tcell" show="syncConfigStatus==CONFLICT">
+        <div class="form-label">{{app.setting.syncconfigconfict}} <span class="value"
+            bind="syncAt|formatTime"></span>
+        </div>
+        <div class="form-group">
+          <button class="cell-btn" click="syncConfig(local)">{{app.setting.syncconfiglocal}}</button>
+          <button class="cell-btn" click="syncConfig(online)">{{app.setting.syncconfigonline}}</button>
+        </div>
+      </div>
+
+      <!-- <div class="tcell">
+        <div class="form-label">{{app.setting.showtip}}</div>
+        <div class="form-group">
+          <div id="switch-showtip" class="switch" click="config.openTip=0/1"
+            bind-class="s-on:config.openTip;s-off:!config.openTip">
+            <span class="slider"></span>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="tcell">
+        <div class="form-label">{{app.setting.speechmsengine}} <span class="icon-premium">PREMIUM</span></div>
+        <div class="form-group">
+          <div id="switch-showtip" class="switch" click="controlToggle(config.speechMSEngine)"
+            bind-class="s-on:config.speechMSEngine;s-off:!config.speechMSEngine">
+            <span class="slider"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.setting.clippopup}}</div>
+        <div class="form-group">
+          <div id="switch-showtip" class="switch" click="controlToggle(config.clipPopup)"
+            bind-class="s-on:config.clipPopup;s-off:!config.clipPopup">
+            <span class="slider"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.setting.translatelang}}</div>
+        <div class="form-group">
+          <select bind="config.translateLang">
+            <option value="af">Afrikaans</option>
+            <option value="sq">Albanian</option>
+            <option value="am">Amharic</option>
+            <option value="ar">Arabic</option>
+            <option value="hy">Armenian</option>
+            <option value="az">Azerbaijani</option>
+            <option value="eu">Basque</option>
+            <option value="be">Belarusian</option>
+            <option value="bn">Bengali</option>
+            <option value="bs">Bosnian</option>
+            <option value="bg">Bulgarian</option>
+            <option value="ca">Catalan</option>
+            <option value="ceb">Cebuano</option>
+            <option value="ny">Chichewa</option>
+            <option value="zh">Chinese (Simplified)</option>
+            <option value="zh-TW">Chinese (Traditional)</option>
+            <option value="co">Corsican</option>
+            <option value="hr">Croatian</option>
+            <option value="cs">Czech</option>
+            <option value="da">Danish</option>
+            <option value="nl">Dutch</option>
+            <option value="en">English</option>
+            <option value="eo">Esperanto</option>
+            <option value="et">Estonian</option>
+            <option value="tl">Filipino</option>
+            <option value="fi">Finnish</option>
+            <option value="fr">French</option>
+            <option value="fy">Frisian</option>
+            <option value="gl">Galician</option>
+            <option value="ka">Georgian</option>
+            <option value="de">German</option>
+            <option value="el">Greek</option>
+            <option value="gu">Gujarati</option>
+            <option value="ht">Haitian Creole</option>
+            <option value="ha">Hausa</option>
+            <option value="haw">Hawaiian</option>
+            <option value="iw">Hebrew</option>
+            <option value="hi">Hindi</option>
+            <option value="hmn">Hmong</option>
+            <option value="hu">Hungarian</option>
+            <option value="is">Icelandic</option>
+            <option value="ig">Igbo</option>
+            <option value="id">Indonesian</option>
+            <option value="ga">Irish</option>
+            <option value="it">Italian</option>
+            <option value="ja">Japanese</option>
+            <option value="jw">Javanese</option>
+            <option value="kn">Kannada</option>
+            <option value="kk">Kazakh</option>
+            <option value="km">Khmer</option>
+            <option value="ko">Korean</option>
+            <option value="ku">Kurdish (Kurmanji)</option>
+            <option value="ky">Kyrgyz</option>
+            <option value="lo">Lao</option>
+            <option value="la">Latin</option>
+            <option value="lv">Latvian</option>
+            <option value="lt">Lithuanian</option>
+            <option value="lb">Luxembourgish</option>
+            <option value="mk">Macedonian</option>
+            <option value="mg">Malagasy</option>
+            <option value="ms">Malay</option>
+            <option value="ml">Malayalam</option>
+            <option value="mt">Maltese</option>
+            <option value="mi">Maori</option>
+            <option value="mr">Marathi</option>
+            <option value="mn">Mongolian</option>
+            <option value="my">Myanmar (Burmese)</option>
+            <option value="ne">Nepali</option>
+            <option value="no">Norwegian</option>
+            <option value="ps">Pashto</option>
+            <option value="fa">Persian</option>
+            <option value="pl">Polish</option>
+            <option value="pt">Portuguese</option>
+            <option value="pa">Punjabi</option>
+            <option value="ro">Romanian</option>
+            <option value="ru">Russian</option>
+            <option value="sm">Samoan</option>
+            <option value="gd">Scots Gaelic</option>
+            <option value="sr">Serbian</option>
+            <option value="st">Sesotho</option>
+            <option value="sn">Shona</option>
+            <option value="sd">Sindhi</option>
+            <option value="si">Sinhala</option>
+            <option value="sk">Slovak</option>
+            <option value="sl">Slovenian</option>
+            <option value="so">Somali</option>
+            <option value="es">Spanish</option>
+            <option value="su">Sundanese</option>
+            <option value="sw">Swahili</option>
+            <option value="sv">Swedish</option>
+            <option value="tg">Tajik</option>
+            <option value="ta">Tamil</option>
+            <option value="te">Telugu</option>
+            <option value="th">Thai</option>
+            <option value="tr">Turkish</option>
+            <option value="uk">Ukrainian</option>
+            <option value="ur">Urdu</option>
+            <option value="uz">Uzbek</option>
+            <option value="vi">Vietnamese</option>
+            <option value="cy">Welsh</option>
+            <option value="xh">Xhosa</option>
+            <option value="yi">Yiddish</option>
+            <option value="yo">Yoruba</option>
+            <option value="zu">Zulu</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.setting.lang}}</div>
+        <div class="form-group">
+          <select bind="config.lang">
+            <option value="auto">Auto ({{systemLang}})</option>
+            <option value="en">English</option>
+            <option value="zh">简体中文</option>
+            <option value="zh-TW">繁体中文</option>
+            <option value="es">Español</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.setting.shortcuts}}</div>
+        <div class="form-group">
+          <a click="showDialog=shortcut" class="btn-link">
+            <span>{{app.setting.shortcutsedit}}</span>
+            <i class="ri-arrow-right-s-line icon-arrow"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.about.appversion}}</div>
+        <div class="form-group">
+          <a href="https://clearlyreader.com/changelog" target="_blank" class="btn-link">
+            <span>{{app.about.fullchangelogs}}</span>
+            <strong class="form-value" bind="clientVersion"></strong>
+            <i class="ri-arrow-right-s-line icon-arrow"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.about.configversion}}</div>
+        <div class="form-group">
+          <a id="btn-system-check" class="btn-link" click="action(updateSystemConfig)">
+            <span>{{app.about.checkconfigversion}}</span>
+            <strong class="form-value" bind="version"></strong>
+            <i class="ri-arrow-right-s-line icon-arrow"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.about.products}}</div>
+
+        <div class="form-group">
+          <a href="https://relingo.net?utm_source=clearly&utm_medium=intro" class="btn-link" target="_blank">
+            <span>Relingo - Master words from any webpage</span>
+            <i class="ri-arrow-right-s-line icon-arrow"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="dialog-footer">
+        <div class="about-wrapper">
+          <div class="btn-about-group">
+            <a href="https://clearlyreader.com/r/report" target="_blank" class="btn-outline">
+              <i class="ri-bug-fill"></i>
+              <span>{{app.about.reportbug}}</span>
+            </a>
+            <a href="https://clearlyreader.com/r/reviews" target="_blank" class="btn-outline">
+              <i class="ri-star-fill"></i>
+              <span>{{app.about.givestars}}</span>
+            </a>
+            <a href="https://clearlyreader.com" target="_blank">
+              <i class="ri-movie-fill"></i>
+              <span>{{app.about.watchvideo}}</span>
+            </a>
+            <a href="https://clearlyreader.com/r/contact" target="_blank">
+              <i class="ri-mail-send-fill"></i>
+              <span>{{app.about.contact}}</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="copyright">{{app.about.copyright}}</div>
+      </div>
+    </div>
+  </div>
+  <!-- dialog setting end -->
+
+  <!-- dialog account -->
+  <div class="dialog" id="dialog-account">
+    <div class="overly-mask" click="showDialog="></div>
+    <div class="setting dialog-account">
+      <div class="dialog-header">
+        <div class="dialog-title">{{app.account.title}}</div>
+        <div class="dialog-btn-close" click="showDialog="><i class="ri-close-line"></i></div>
+      </div>
+
+      <div class="tcell height-64" show="!config.accountEmail">
+        <div class="form-label">{{app.account.loginemail}}</div>
+        <div class="form-group">
+          <input class="account-input" type="email" bind="loginEmail" placeholder="Email" />
+        </div>
+      </div>
+      <div class="tcell height-64" show="loginCodeNeed">
+        <div class="form-label">{{app.account.logincode}}</div>
+        <div class="form-group">
+          <input class="account-input" length="4" bind="loginCode"
+            placeholder="Auth code" />
+        </div>
+      </div>
+
+      <div class="tcell" show="loginCodeNeed">
+        <div class="form-label"><i class="ri-mail-send-fill"></i> {{app.account.codetip}}</div>
+      </div>
+
+      <div class="tcell" show="config.accountEmail">
+        <div class="form-label">{{app.account.email}}</div>
+        <div class="form-group">
+          <strong class="form-value" bind="config.accountEmail"></strong>
+        </div>
+      </div>
+
+      <div class="tcell" show="config.accountEmail">
+        <div class="form-label">{{app.account.planid}}</div>
+        <div class="form-group">
+          <span class="form-value" bind="config.accountPlanId" show="config.accountPlanId"></span>
+          <span class="form-value" show="!config.accountPlanId">FREE</span>
+        </div>
+      </div>
+
+      <div class="tcell" show="config.accountEmail">
+        <div class="form-label">{{app.account.planexpiredat}}</div>
+        <div class="form-group">
+          <span class="form-value" bind="config.accountPlanExpiredAt|formatDate"
+            show="config.accountPlanExpiredAt"></span>
+          <span class="form-value" show="!config.accountPlanExpiredAt">-</span>
+        </div>
+      </div>
+
+      <div class="tcell account-action height-64">
+        <div class="btn-group">
+          <button class="btn solid sm" id="btn-account-submit" show="!config.accountEmail" click="action(login)">
+            <span>{{app.account.loginbtn}}</span>
+          </button>
+          <button class="btn outline sm" id="btn-account-logout" show="config.accountEmail" click="action(logout)">
+            <span>{{app.account.logoutbtn}}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- dialog account end -->
+
+  <!-- dialog shortcut -->
+  <div class="dialog center" id="dialog-shortcut">
+    <div class="overly-mask" click="showDialog="></div>
+    <div class="setting dialog-account">
+      <div class="dialog-header">
+        <div class="dialog-title">{{app.shortcut.title}}</div>
+        <div class="dialog-btn-close" click="showDialog="><i class="ri-close-line"></i></div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.shortcut.toggle}}</div>
+        <div class="form-group">
+          <a id="link-edit-shortcuts" class="btn-link" click="action(editShortcuts)">
+            <span>{{app.shortcut.toggle_k}}</span>
+            <i class="ri-arrow-right-s-line icon-a rrow"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.shortcut.prev}}</div>
+        <div class="form-group">
+          <span class="key">←</span>
+          <div class="divider">/</div>
+
+          <span class="key">k</span>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.shortcut.next}}</div>
+        <div class="form-group">
+          <span class="key">→</span>
+          <div class="divider">/</div>
+          <span class="key">j</span>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.shortcut.home}}</div>
+        <div class="form-group">
+          <span class="key">h</span>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.shortcut.last}}</div>
+        <div class="form-group">
+          <span class="key">l</span>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.shortcut.speak}}</div>
+        <div class="form-group">
+          <span class="key">s</span>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.shortcut.print}}</div>
+        <div class="form-group">
+          <span class="key">p</span>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.shortcut.export}}</div>
+        <div class="form-group">
+          <span class="key">e</span>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.shortcut.theme}}</div>
+        <div class="form-group">
+          <span class="key">t</span>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.shortcut.clip}}</div>
+        <div class="form-group">
+          <span class="key">c</span>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.shortcut.bookview}}</div>
+        <div class="form-group">
+          <span class="key">b</span>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.shortcut.escape}}</div>
+        <div class="form-group">
+          <span class="key">ESC</span>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.shortcut.help}}</div>
+        <div class="form-group">
+          <span class="key">?</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- dialog account end -->
+
+  <!-- dialog shortcut -->
+  <div class="dialog center" id="dialog-print">
+    <div class="overly-mask" click="showDialog="></div>
+    <div class="setting dialog-account">
+      <div class="dialog-header">
+        <div class="dialog-title">{{app.print.title}}</div>
+        <div class="dialog-btn-close" click="showDialog="><i class="ri-close-line"></i></div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.print.withoutline}} <span class="icon-pro">PRO</span></div>
+        <div class="form-group">
+          <div class="switch" click="controlToggle(config.printWithOutline)"
+            bind-class="s-on:config.printWithOutline;s-off:!config.printWithOutline">
+            <span class="slider"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.print.withmark}} <span class="icon-pro">PRO</span></div>
+        <div class="form-group">
+          <div class="switch" click="controlToggle(config.printWithMark)"
+            bind-class="s-on:config.printWithMark;s-off:!config.printWithMark">
+            <span class="slider"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label">{{app.print.withoutmeta}} <span class="icon-pro">PRO</span></div>
+        <div class="form-group">
+          <div class="switch" click="controlToggle(config.printWithoutMeta)"
+            bind-class="s-on:config.printWithoutMeta;s-off:!config.printWithoutMeta">
+            <span class="slider"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="tcell">
+        <div class="form-label">{{app.print.withsummary}} <span class="icon-pro">PREMIUM</span></div>
+        <div class="form-group">
+          <div class="switch" click="config.printWithSummary=0/1"
+            bind-class="s-on:config.printWithSummary;s-off:!config.printWithSummary">
+            <span class="slider"></span>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="tcell">
+        <button class="btn solid md center" click="action(print)">
+          <span>{{app.print.btn}}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- dialog account end -->
+
+  <!-- dialog shortcut -->
+  <div class="dialog center" id="dialog-upgrade">
+    <div class="overly-mask" click="showDialog="></div>
+    <div class="setting dialog-account">
+      <div class="dialog-header">
+        <div class="dialog-title">{{app.upgrade.title}}</div>
+        <div class="dialog-btn-close" click="showDialog="><i class="ri-close-line"></i></div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label"> <i class="ri-paint-fill"></i>{{app.upgrade.feature1}}</div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label"><i class="ri-pantone-line"></i>{{app.upgrade.feature2}}</div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label"><i class="ri-font-size"></i>{{app.upgrade.feature3}}</div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label"><i class="ri-user-voice-line"></i>{{app.upgrade.feature4}}</div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label"><i class="ri-book-open-line"></i>{{app.upgrade.feature5}}</div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label"><i class="ri-percent-line"></i>{{app.upgrade.feature6}}</div>
+      </div>
+
+      <div class="tcell">
+        <div class="form-label"><i class="ri-advertisement-line"></i>{{app.upgrade.feature7}}</div>
+      </div>
+
+      <div class="tcell upgrade-action">
+        <div class="discount-tips">
+          <i class="ri-coupon-line"></i>
+          <span>Special Discount available</span>
+        </div>
+        <div>
+          <a class="btn solid md" href="https://clearlyreader.com/pricing?utm_source=clealy&utm_medium=upgradedialog"
+            target="_blank">{{app.upgrade.btn}}</a>
+          <a class="btn solid md" click="showDialog=account" target="_blank">{{app.upgrade.active}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- dialog shortcut -->
+  <div class="dialog center" id="dialog-kindle">
+    <div class="overly-mask" click="showDialog="></div>
+    <div class="setting dialog-account">
+      <div class="dialog-header">
+        <div class="dialog-title">{{app.kindle.title}}</div>
+        <div class="dialog-btn-close" click="showDialog="><i class="ri-close-line"></i></div>
+      </div>
+
+      <div class="tcell height-64">
+        <div class="form-label">{{app.kindle.email}}</div>
+        <div class="form-group">
+          <input class="account-input" type="text" bind="config.kindleEmailName" />
+          <span style="margin-left: 5px;">@kindle.com</span>
+        </div>
+      </div>
+
+      <div class="tcell form-tip">
+        {{app.kindle.tip}}
+      </div>
+
+      <div class="tcell upgrade-action" style="padding: 8px 0 10px 0">
+        <btn class="btn solid md" click="sendToKindle()">{{app.kindle.btn}}</btn>
+      </div>
+    </div>
+  </div>
+  <!-- dialog account end -->
+
+  <!--div class="menu" id="menu-translate" menu-tooltip="TRANSLATE">
+        <span><i class="material-icons" id="menu-translate-icon">translate</i></span>
+    </div-->
+
+  <!-- <div class="menu" id="menu-speak" menu-tooltip="AUDIO">
+        <span><i class="material-icons" id="menu-speak-icon">volume_down</i></span> -->
+  <!--
+            <span class="btn" id="btn-speak-pause" style="display:none"><i class="fa fa-pause"></i></span>
+            <span class="btn" id="btn-speak-resume" style="display:none"><i class="fa fa-play"></i></span>
+            <span class="btn" id="btn-speak-stop" style="display:none"><i class="fa fa-stop"></i></span>
+            -->
+  <!-- </div> -->
+
+  <script src="/pages/content/sentry.bundle.min.js"
+    integrity="sha384-iUJ/cFtSlhrvdhpRoOjiSj/xlTQ2wIbcpcjIvJ1vbzMwnDHPtY+bpFtajtEsG5vB"
+    crossorigin="anonymous"></script>
+
+  <script src="/pages/content/ga.js"></script>
+
+  <!--#build-->
+  <script src="/pages/content/jquery.min-v3.3.1.js"></script>
+  <script src="/pages/content/purify.min-v2.0.js"></script>
+  <script src="/pages/content/turndown.min.js"></script>
+  <script src="/pages/content/highlight.min.js"></script>
+  <script src="/pages/content/mark.min.js"></script>
+  <script src="/pages/content/html-docx.js"></script>
+  <script src="/pages/content/message.js"></script>
+  <script src="/pages/content/katex.min.js"></script>
+  <script src="/pages/content/katex-ce.min.js"></script>
+  <script src="/pages/content/auto-render.min.js"></script>
+  <script src="/pages/content/dayjs.min.js"></script>
+  <script src="/pages/content/microsoft.cognitiveservices.speech.sdk.bundle.min.js"></script>
+  <!--/build-->
+
+  <!--#build-->
+  <script src="/pages/content/env.js"></script>
+  <script src="/pages/content/app.js"></script>
+  <!--/build-->
+</body>
+
+</html>

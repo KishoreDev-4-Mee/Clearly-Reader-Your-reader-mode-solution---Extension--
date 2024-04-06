@@ -1,0 +1,10 @@
+{
+  "pkgName": {
+      "message": "Clearly Reader - Your reader mode solution",
+      "description": ""
+  },
+  "pkgDescription": {
+      "message": "A browser extension with reader mode for optimal experience. Features copy, translate, speech, and PDF and Markdown export.",
+      "description": ""
+  }
+}
